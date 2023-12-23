@@ -1,0 +1,38 @@
+version: "3.5"
+services:
+    traefik:
+      image: traefik:v2.10.4
+      container_name: traefik
+      ports:
+        - 80:80
+        - 443:443
+        - 8111:8080
+      # -- (Optional) Enable Dashboard, don't do in production
+      # - 8080:8080
+      volumes:
+        - ./config:/etc/traefik
+        - ./logs:/var/log/traefik
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+    # -- (Optional) When using Cloudflare as Cert Resolver
+      environment:
+       - DESEC_TOKEN=xxxxx
+      networks:
+        - proxy
+      restart: unless-stopped
+    whoami:
+      image: traefik/whoami
+      networks:
+       - proxy
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.whoami.loadbalancer.server.port=80" # facultative (traefik will use the first exposed port by default)
+        - "traefik.http.routers.whoami.rule=Host(`whoami.a2.one.pl`)"
+        - "traefik.http.routers.whoami.entrypoints=https"
+        - "traefik.http.routers.whoami.tls.certresolver=smallstep"
+      restart: unless-stopped
+
+
+
+networks:
+  proxy:
+    external: true
