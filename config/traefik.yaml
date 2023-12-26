@@ -38,28 +38,28 @@ entryPoints:
   #   address: :8080
 
 # -- Configure your CertificateResolver here...
-certificatesResolvers:
-   dns-desec:
-     acme:
-       email: e@mail.io
-       storage: /etc/traefik/certs/acme.json
+#certificatesResolvers:
+#   dns-desec:
+#     acme:
+#       email: e@mail.io
+#       storage: /etc/traefik/certs/acme.json
 #       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
 #       -- (Optional) Remove this section, when using DNS Challenge
 #       httpChallenge:
 #         entryPoint: web
 #       -- (Optional) Configure DNS Challenge
-       dnsChallenge:
-         provider: desec
-         resolvers:
-           - "1.1.1.1:53"
-           - "8.8.8.8:53"
-   smallstep:
-     acme:
-       email: 3@mail.io
-       storage: /etc/traefik/certs/acme.json
-       caServer: "https://io/acme/acme/directory"
-       httpChallenge:
-         entryPoint: http
+#      dnsChallenge:
+#         provider: desec
+#         resolvers:
+#           - "1.1.1.1:53"
+#           - "8.8.8.8:53"
+#   smallstep:
+#     acme:
+#       email: 3@mail.io
+#       storage: /etc/traefik/certs/acme.json
+#       caServer: "https://io/acme/acme/directory"
+#       httpChallenge:
+#         entryPoint: http
 #       -- (Optional) Configure DNS Challenge
 #       dnsChallenge:
 #         provider: your-resolver (e.g. cloudflare)
@@ -72,12 +72,12 @@ serversTransport:
    insecureSkipVerify: true
 
 # -- (Optional) Overwrite Default Certificates
-# tls:
-#   stores:
-#     default:
-#       defaultCertificate:
-#         certFile: /etc/traefik/certs/cert.pem
-#         keyFile: /etc/traefik/certs/cert-key.pem
+tls:
+   stores:
+     default:
+       defaultCertificate:
+         certFile: /etc/traefik/certs/cert.pem
+         keyFile: /etc/traefik/certs/cert-key.pem
 # -- (Optional) Disable TLS version 1.0 and 1.1
 #   options:
 #     default:
